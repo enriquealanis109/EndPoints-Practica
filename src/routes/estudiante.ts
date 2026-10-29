@@ -13,6 +13,8 @@ const estudiantes: Estudiante[] = [];
 let siguienteId = 1;
 
 router.get("/", function (req: Request, res: Response) {
+  // #swagger.description = 'Obtiene la lista de estudiantes'
+
   const bootcamp = req.query.bootcamp;
 
   let resultado: Estudiante[] = estudiantes;
@@ -29,6 +31,7 @@ router.get("/", function (req: Request, res: Response) {
 });
 
 router.get("/:id", function (req: Request, res: Response) {
+  // #swagger.description = 'Obtiene la lista de estudiantes por id'
   const idBuscando = Number(req.params.id);
   const estEncontrado = estudiantes.find((e) => e.id === idBuscando);
 
@@ -48,6 +51,7 @@ router.get("/:id", function (req: Request, res: Response) {
 
 router.post("/", function (req: Request, res: Response) {
   const { nombre, email, bootcamp } = req.body;
+  // #swagger.description = 'Crea un nuevo estudiante'
 
   if (!email) {
     res.status(400).json({
@@ -72,6 +76,11 @@ router.post("/", function (req: Request, res: Response) {
 });
 
 router.put("/:id", function (req: Request, res: Response) {
+  // #swagger.description = 'Actualiza un estudiante'
+  /* #swagger.parameters['body'] = {
+        in: 'body',
+        schema: { nombre: 'Ana López', email: 'ana@mail.com', bootcamp: 'Fullstack' }
+  } */
   const idBuscando = Number(req.params.id);
   const estModificado = estudiantes.find((e) => e.id === idBuscando);
   if (!estModificado) {
@@ -93,6 +102,8 @@ router.put("/:id", function (req: Request, res: Response) {
 });
 
 router.delete("/:id", function (req: Request, res: Response) {
+  // #swagger.description = 'Elimina un estudiante'
+
   const idBuscando = Number(req.params.id);
   const indice = estudiantes.findIndex((e) => e.id === idBuscando);
 
