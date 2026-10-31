@@ -5,7 +5,7 @@ const router: Router = Router();
 
 interface Estudiante {
   id: number;
-  nombre: string;
+  name: string;
   email: string;
   bootcamp: string;
 }
@@ -22,12 +22,7 @@ router.get("/", function (req: Request, res: Response) {
   if (bootcamp) {
     resultado = estudiantes.filter((e) => e.bootcamp === bootcamp);
   }
-  res.status(200).json({
-    ok: true,
-    mensaje: "Lista de estudiantes",
-    total: resultado.length,
-    data: resultado,
-  });
+  res.status(200).json(resultado);
 });
 
 router.get("/:id", function (req: Request, res: Response) {
@@ -50,7 +45,7 @@ router.get("/:id", function (req: Request, res: Response) {
 });
 
 router.post("/", function (req: Request, res: Response) {
-  const { nombre, email, bootcamp } = req.body;
+  const { name, email, bootcamp } = req.body;
   // #swagger.description = 'Crea un nuevo estudiante'
 
   if (!email) {
@@ -63,7 +58,7 @@ router.post("/", function (req: Request, res: Response) {
 
   const nuevoEstudiante: Estudiante = {
     id: siguienteId++,
-    nombre,
+    name,
     email,
     bootcamp,
   };
@@ -79,7 +74,7 @@ router.put("/:id", function (req: Request, res: Response) {
   // #swagger.description = 'Actualiza un estudiante'
   /* #swagger.parameters['body'] = {
         in: 'body',
-        schema: { nombre: 'Ana López', email: 'ana@mail.com', bootcamp: 'Fullstack' }
+        schema: { name: 'Ana López', email: 'ana@mail.com', bootcamp: 'Fullstack' }
   } */
   const idBuscando = Number(req.params.id);
   const estModificado = estudiantes.find((e) => e.id === idBuscando);
@@ -89,9 +84,9 @@ router.put("/:id", function (req: Request, res: Response) {
       mensaje: `El estudiante con el id ${idBuscando} no existe!!!`,
     });
   }
-  const { nombre, email, bootcamp } = req.body;
+  const { name, email, bootcamp } = req.body;
 
-  estModificado.nombre = nombre;
+  estModificado.name = name;
   estModificado.email = email;
   estModificado.bootcamp = bootcamp;
   res.status(200).json({
